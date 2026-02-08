@@ -46,7 +46,7 @@ public class ProductController {
 	@ModelAttribute("products")
 	public List<Product> getProducts() {
 
-		return productServices.findAll();
+		return productServices.findAllDescById();
 	}
 
 	@GetMapping("/product")
@@ -88,6 +88,14 @@ public class ProductController {
 
 		redirect.addFlashAttribute("products", List.of(product));
 		redirect.addFlashAttribute("message", "saveTrue");
+		return "redirect:/dashboard/product";
+	}
+
+	@GetMapping("/product/confirm-delete/{id}")
+	public String confirmDelete(RedirectAttributes redirect, @PathVariable("id") Integer id) {
+		Product product = productServices.findById(id);
+		redirect.addFlashAttribute("deleteProduct", product);
+		redirect.addFlashAttribute("showDeleteModal", true);
 		return "redirect:/dashboard/product";
 	}
 

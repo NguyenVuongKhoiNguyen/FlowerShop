@@ -37,7 +37,7 @@ public class Product {
     @NotBlank
     private String name; //use not blank for string
 
-    @Column(name = "Image", length = 50)
+    @Column(name = "Image")
     @NotBlank
     private String image;
 

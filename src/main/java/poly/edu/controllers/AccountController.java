@@ -79,6 +79,14 @@ public class AccountController {
 		return "redirect:/dashboard/account";
 	}
 
+	@GetMapping("/account/confirm-delete/{username}")
+	public String confirmDelete(RedirectAttributes redirect, @PathVariable("username") String username) {
+		Account account = accountServices.findById(username);
+		redirect.addFlashAttribute("deleteAccount", account);
+		redirect.addFlashAttribute("showDeleteModal", true);
+		return "redirect:/dashboard/account";
+	}
+
 	@GetMapping("/account/delete/{username}")
 	public String delete(RedirectAttributes redirect, @PathVariable("username") String username) {
 

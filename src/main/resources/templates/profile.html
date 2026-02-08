@@ -99,14 +99,25 @@
                              aria-labelledby="orders-tab">
                             <div class="card">
                                 <div class="card-body">
+                                    <!-- Success Message -->
+                                    <div th:if="${message == 'saveTrue'}" class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <i class="bi bi-check-circle"></i> Order placed successfully! Thank you for your purchase.
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                    
+                                    <div th:if="${message == 'saveFail'}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <i class="bi bi-x-circle"></i> Failed to place order. Please try again.
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                    
                                     <!-- Orders List -->
                                     <div th:if="${!#lists.isEmpty(userOrders)}">
-                                        <div class="mb-3" th:each="order : ${userOrders}">
+                                        <div class="mb-3" th:each="order, iterStat : ${userOrders}">
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="d-flex justify-content-between align-items-start mb-3">
                                                         <div>
-                                                            <h6 class="mb-1">Order #<span th:text="${order.id}">123</span></h6>
+                                                            <h6 class="mb-1">Order #<span th:text="${iterStat.index + 1}">1</span></h6>
                                                             <small class="text-muted">
                                                                 <i class="bi bi-calendar"></i>
                                                                 <span th:text="${#temporals.format(order.createDate, 'dd/MM/yyyy')}">Date</span>

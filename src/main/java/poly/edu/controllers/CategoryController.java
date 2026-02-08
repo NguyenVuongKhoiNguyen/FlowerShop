@@ -67,6 +67,14 @@ public class CategoryController {
 		return "redirect:/dashboard/category";
 	}
 
+	@GetMapping("/category/confirm-delete/{id}")
+	public String confirmDelete(RedirectAttributes redirect, @PathVariable("id") String id) {
+		Category category = categoryServices.findById(id);
+		redirect.addFlashAttribute("deleteCategory", category);
+		redirect.addFlashAttribute("showDeleteModal", true);
+		return "redirect:/dashboard/category";
+	}
+
 	@GetMapping("/category/delete/{id}")
 	public String delete(RedirectAttributes redirect, @PathVariable("id") String id) {
 

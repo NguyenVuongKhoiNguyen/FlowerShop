@@ -65,9 +65,12 @@
 							</div>
 
 							<div class="col-md-3">
-								<button type="submit" class="btn btn-primary w-100">
+								<button type="submit" class="btn btn-primary">
 									<i class="bi bi-search me-2"></i>Filter
 								</button>
+								<a th:href="@{/dashboard/product}" class="btn btn-secondary ms-2">
+									<i class="bi bi-arrow-clockwise me-2"></i>Reset
+								</a>
 							</div>
 						</form>
 
@@ -111,41 +114,10 @@
 													class="btn btn-sm btn-warning" title="Edit">
 													<i class="bi bi-pencil"></i>
 												</a>
-												<button type="button" class="btn btn-sm btn-danger"
-													data-bs-toggle="modal" 
-													th:data-bs-target="'#deleteModal' + ${p.id}"
-													title="Delete">
+												<a th:href="@{/dashboard/product/confirm-delete/{id}(id=${p.id})}"
+													class="btn btn-sm btn-danger" title="Delete">
 													<i class="bi bi-trash"></i>
-												</button>
-											</div>
-											
-											<!-- Delete Confirmation Modal -->
-											<div class="modal fade" th:id="'deleteModal' + ${p.id}" tabindex="-1">
-												<div class="modal-dialog modal-dialog-centered">
-													<div class="modal-content">
-														<div class="modal-header bg-danger text-white">
-															<h5 class="modal-title">
-																<i class="bi bi-exclamation-triangle me-2"></i>Confirm Delete
-															</h5>
-															<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-														</div>
-														<div class="modal-body text-center py-4">
-															<i class="bi bi-trash text-danger" style="font-size: 3rem;"></i>
-															<h5 class="mt-3">Are you sure?</h5>
-															<p class="text-muted">
-																Do you want to delete "<span th:text="${p.name}"></span>"?<br>
-																This action cannot be undone.
-															</p>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-															<a th:href="@{/dashboard/product/delete/{id}(id=${p.id})}"
-																class="btn btn-danger">
-																<i class="bi bi-trash me-2"></i>Delete
-															</a>
-														</div>
-													</div>
-												</div>
+												</a>
 											</div>
 										</td>
 									</tr>
@@ -224,6 +196,38 @@
 					        </li>
 					    </ul>
 					</nav>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Delete Confirmation Modal (Server-side controlled) -->
+		<div class="modal fade" id="deleteModal" tabindex="-1"
+		     th:classappend="${showDeleteModal} ? 'show' : ''" 
+		     th:style="${showDeleteModal} ? 'display: block;' : ''"
+		     th:if="${deleteProduct != null}">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-danger text-white">
+						<h5 class="modal-title">
+							<i class="bi bi-exclamation-triangle me-2"></i>Confirm Delete
+						</h5>
+						<a th:href="@{/dashboard/product}" class="btn-close btn-close-white" aria-label="Close"></a>
+					</div>
+					<div class="modal-body text-center py-4">
+						<i class="bi bi-trash text-danger" style="font-size: 3rem;"></i>
+						<h5 class="mt-3">Are you sure?</h5>
+						<p class="text-muted">
+							Do you want to delete "<span th:text="${deleteProduct.name}"></span>"?<br>
+							This action cannot be undone.
+						</p>
+					</div>
+					<div class="modal-footer">
+						<a th:href="@{/dashboard/product}" class="btn btn-secondary">Cancel</a>
+						<a th:href="@{/dashboard/product/delete/{id}(id=${deleteProduct.id})}"
+							class="btn btn-danger">
+							<i class="bi bi-trash me-2"></i>Delete
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -343,7 +347,7 @@
 	</div>
 </div>
 	<!-- Modal backdrop (shown when modal is active) -->
-	<div th:if="${showModal}" class="modal-backdrop fade show"></div>
+	<div th:if="${showModal or showDeleteModal}" class="modal-backdrop fade show"></div>
 	
 	<script layout:fragment="scripts">
 		// Initialize modal functionality for closing when shown via Thymeleaf

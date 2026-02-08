@@ -35,6 +35,9 @@ public class Order {
     @Column(name = "CreateDate")
     private LocalDate createDate = LocalDate.now();
 
+    @Column(name = "Status")
+    private String status = "PENDING";
+    
     @Column(name = "Address", length = 255)
     private String address;
     

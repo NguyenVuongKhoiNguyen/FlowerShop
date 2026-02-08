@@ -1,5 +1,7 @@
 package poly.edu.models.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -9,26 +11,20 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import poly.edu.models.entities.Account;
-
-import java.util.List;
+import poly.edu.models.repositories.AccountRepository;
 
 @Service
-public class CustomerDetailsService implements UserDetailsService {
+public class CustomerDetailServices implements UserDetailsService {
+	
+	@Autowired
+    AccountRepository accountRepository;
 
-    @Autowired
-    private AccountServices accountServices;
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-    @Override
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
-
-        Account account;
-        try {
-            account = accountServices.findById(username);
-        } catch (Exception e) {
+        Account account = accountRepository.findById(username).orElse(null);
+        if (account == null)
             throw new UsernameNotFoundException("User not found");
-        }
-
+        
         // Role
         String role = account.getAdmin() != null && account.getAdmin()
                 ? "ROLE_ADMIN"

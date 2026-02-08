@@ -1,4 +1,4 @@
-package poly.edu.config;
+ package poly.edu.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +8,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import poly.edu.models.services.CustomerDetailsService;
+
+import poly.edu.models.services.CustomerDetailServices;
 
 @Configuration
 public class SecurityConfig {
@@ -36,10 +37,10 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public AuthenticationManager authenticationManager(HttpSecurity http, CustomerDetailsService userDetailsService,
+	public AuthenticationManager authenticationManager(HttpSecurity http, CustomerDetailServices userDetailServices,
 			PasswordEncoder passwordEncoder) throws Exception {
 
-		return http.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(userDetailsService)
+		return http.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(userDetailServices)
 				.passwordEncoder(passwordEncoder).and().build();
 	}
 }

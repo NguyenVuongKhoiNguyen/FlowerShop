@@ -53,7 +53,7 @@
                         <ul class="list-unstyled">
                             <li class="mb-2">
                                 <i class="bi bi-box-seam text-primary"></i>
-                                <strong>Status:</strong>
+                                <strong>Quantity:</strong>
                                 <span class="badge bg-success ms-2" th:if="${product.amount > 0}">
                                     In Stock (<span th:text="${product.amount}">0</span> products)
                                 </span>
@@ -63,11 +63,11 @@
                             </li>
                             <li class="mb-2" th:if="${product.available}">
                                 <i class="bi bi-check-circle text-success"></i>
-                                <strong>Trạng thái:</strong> In Business
+                                <strong>Status:</strong> In Business
                             </li>
                             <li class="mb-2" th:unless="${product.available}">
                                 <i class="bi bi-x-circle text-danger"></i>
-                                <strong>Date created:</strong> Out Of Business
+                                <strong>Status:</strong> Out Of Business
                             </li>
                             <li class="mb-2">
                                 <i class="bi bi-calendar text-primary"></i>

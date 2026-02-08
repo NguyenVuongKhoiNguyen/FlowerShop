@@ -38,6 +38,26 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             
+            <div th:if="${message == 'notAvailable'}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-x-circle"></i> This product is not available for purchase!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            
+            <div th:if="${message == 'productNotFound'}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-x-circle"></i> Product not found!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            
+            <div th:if="${message == 'invalidQuantity'}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-triangle"></i> Invalid quantity! Please enter a valid amount.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            
+            <div th:if="${message == 'addFail'}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-x-circle"></i> Failed to add product to cart!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            
             <div th:if="${message == 'quantityUpdated'}" class="alert alert-success alert-dismissible fade show" role="alert">
                 <i class="bi bi-check-circle"></i> Cart quantity updated successfully!
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

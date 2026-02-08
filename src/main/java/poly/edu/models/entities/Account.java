@@ -36,7 +36,7 @@ public class Account {
     @NotBlank
     private String email;
 
-    @Column(name = "Photo", length = 50)
+    @Column(name = "Photo")
     private String photo;
     
     @Column(name = "Address", length = 255)

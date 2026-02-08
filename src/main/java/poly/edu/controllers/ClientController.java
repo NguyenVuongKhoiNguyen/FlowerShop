@@ -147,7 +147,18 @@ public class ClientController {
 			order = orderServices.addOrderDetailToOrder(order, productId, quantity);
 			redirect.addFlashAttribute("cartMessage", "addSuccess");
 		} catch (RuntimeException e) {
-			redirect.addFlashAttribute("cartMessage", "insufficientStock");
+			String errorMessage = e.getMessage();
+			if (errorMessage.contains("not available")) {
+				redirect.addFlashAttribute("cartMessage", "notAvailable");
+			} else if (errorMessage.contains("Insufficient stock")) {
+				redirect.addFlashAttribute("cartMessage", "insufficientStock");
+			} else if (errorMessage.contains("not found")) {
+				redirect.addFlashAttribute("cartMessage", "productNotFound");
+			} else if (errorMessage.contains("Invalid quantity")) {
+				redirect.addFlashAttribute("cartMessage", "invalidQuantity");
+			} else {
+				redirect.addFlashAttribute("cartMessage", "addFail");
+			}
 		}
 
 		return "redirect:/products";
@@ -160,7 +171,18 @@ public class ClientController {
 		try {
 			order = orderServices.addOrderDetailToOrder(order, productId, quantity);
 		} catch (RuntimeException e) {
-			redirect.addFlashAttribute("message", "insufficientStock");
+			String errorMessage = e.getMessage();
+			if (errorMessage.contains("not available")) {
+				redirect.addFlashAttribute("message", "notAvailable");
+			} else if (errorMessage.contains("Insufficient stock")) {
+				redirect.addFlashAttribute("message", "insufficientStock");
+			} else if (errorMessage.contains("not found")) {
+				redirect.addFlashAttribute("message", "productNotFound");
+			} else if (errorMessage.contains("Invalid quantity")) {
+				redirect.addFlashAttribute("message", "invalidQuantity");
+			} else {
+				redirect.addFlashAttribute("message", "addFail");
+			}
 			return "redirect:/cart/checkout";
 		}
 
@@ -276,9 +298,10 @@ public class ClientController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			redirect.addFlashAttribute("message", "saveFail");
+			return "redirect:/cart/checkout";
 		}
 
-		return "redirect:/cart/checkout";
+		return "redirect:/profile";
 	}
 
 	@GetMapping("/profile")

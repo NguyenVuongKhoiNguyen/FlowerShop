@@ -402,6 +402,16 @@
     color: #E65100;
 }
 
+.status-badge.processing {
+    background-color: #BBDEFB;
+    color: #1565C0;
+}
+
+.status-badge.shipped {
+    background-color: #C5CAE9;
+    color: #283593;
+}
+
 .status-badge.completed {
     background-color: var(--secondary-light);
     color: var(--secondary-dark);
